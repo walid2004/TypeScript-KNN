@@ -1,6 +1,3 @@
-const greet = (name: string): string => {
-  return `Hello, ${name}!`;
-};
 let database:{[key:number]:number}={}
 let dataset :number[][]=[[.54,.12,.72,.45]]
 let row:number[]=dataset[0]

@@ -89,8 +89,8 @@ for (const list of temp_matrix){
 
 
 
-function predict(data:number[]){
-        let to_be_sent:number[][][]=[]
+function slicer(data:number[]){
+        let to_be_sent:number[][]=[]
         let x:number=data[0]
         x=10*x
         x=Math.floor(x)
@@ -105,10 +105,41 @@ function predict(data:number[]){
         }
         for (let a =x-1;a<=x+1;a++){
             for (let b=y-1;b<=y+1;b++){
-                to_be_sent.push(temp_matrix[a][b])
+                if (temp_matrix[a]?.[b]) {
+      to_be_sent.push(...temp_matrix[a][b]);
+    }
             }
         }
         return(to_be_sent)
 }
 console.log('#################################################################')
-console.log(predict([.32,.009]))
+console.log(slicer([.32,.9]))
+
+function distance(point_1:number[],point2:number[]){
+    let dist = Math.sqrt((point_1[0]**2-point2[0]**2)+(point_1[1]**2-point2[1]**2))
+    return dist
+}
+
+function predict(point:number[]){
+    let final: number[][]=[]
+    let data=slicer(point)
+    let dist =0
+    let to_be_added:number[]=[]
+    for (let zz =0;zz<5;zz++){
+    let n=0
+    let lowest = Infinity
+    for (const points of data){
+        dist =distance(point,points)
+        if (dist<lowest){
+            lowest=dist
+            to_be_added=[...points,n,dist]
+        }
+        n++
+    }
+    data.splice(to_be_added[3],1)
+    final.push(to_be_added)
+    }
+    return final
+}
+console.log('wwwwwwwwwwwwwwwwwwwwww')
+console.log(predict([.9,.9]))
